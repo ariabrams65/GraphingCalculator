@@ -15,13 +15,16 @@ public class Plot {
 
     public void addEquations(String... equation) {
         graphs.clear();
+        int i = 0;
         
         for (String e : equation) {
             
             if (e.isEmpty()) {
+                i++;
                 continue;
             }
-            graphs.add(new Equation(e));
+            graphs.add(new Equation(e, i));
+            i++;
         }
     }
 

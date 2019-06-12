@@ -5,9 +5,11 @@ import java.util.Stack;
 public class Equation {
 
     private String equation;
+    private int number;
 
-    public Equation(String equation) {
+    public Equation(String equation, int number) {
         this.equation = equation;
+        this.number = number;
     }
 
     public double getYValue(double x) {
@@ -156,5 +158,9 @@ public class Equation {
 
     private boolean isFunction(String t) {
         return t.matches("sin|cos|tan");
+    }
+    
+    public int getNumber() {
+        return this.number;
     }
 }

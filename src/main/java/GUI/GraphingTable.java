@@ -27,10 +27,9 @@ public class GraphingTable extends JPanel {
         graphGrid(g);
         //I don't know why I need a try Catch
         try {
-            for (int i = 0; i < plot.getGraphs().size(); i++) {
-                    Equation e = plot.getGraphs().get(i);
+            for (Equation e : plot.getGraphs()) {
                     //changes color for each equation
-                    g.setColor(colors.get(i));
+                    g.setColor(colors.get(e.getNumber()));
                     
                     graph(e, g);  
             }
@@ -56,6 +55,7 @@ public class GraphingTable extends JPanel {
 
             //checks to see if the value is undefined and skips it
             if (Double.toString(e.getYValue(i)).equals("NaN")) {
+                System.out.println("yes");
                 continue;
             }
             //calculating the next y value to remove gaps in the graph
