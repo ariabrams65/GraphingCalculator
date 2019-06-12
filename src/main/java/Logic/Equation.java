@@ -8,12 +8,12 @@ public class Equation {
     private int number;
 
     public Equation(String equation, int number) {
-        this.equation = equation;
+        this.equation = infixToPostfix(equation);
         this.number = number;
     }
 
     public double getYValue(double x) {
-        String newEquation = infixToPostfix(equation.replace("x", Double.toString(x)));
+        String newEquation = equation.replace("x", Double.toString(x));
 
         Stack<Double> stack = new Stack<Double>();
 
@@ -74,7 +74,7 @@ public class Equation {
 
         for (String t : tokens) {
 
-            if (isNumber(t)) {
+            if (isNumber(t) || t.equals("x")) {
                 output += t + " ";
 
             } else if (isFunction(t)) {

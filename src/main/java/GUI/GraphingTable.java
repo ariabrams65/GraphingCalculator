@@ -55,8 +55,7 @@ public class GraphingTable extends JPanel {
 
             //checks to see if the value is undefined and skips it
             if (Double.toString(e.getYValue(i)).equals("NaN")) {
-                System.out.println("yes");
-                continue;
+               continue;
             }
             //calculating the next y value to remove gaps in the graph
             int yNext = getYPixel(i + increment, e);
