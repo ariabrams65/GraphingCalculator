@@ -17,9 +17,9 @@ public class Equation {
 
         Stack<Double> stack = new Stack<Double>();
 
-        String[] list = newEquation.split(" ");
+        String[] tokens = newEquation.split(" ");
 
-        for (String t : list) {
+        for (String t : tokens) {
 
             if (isNumber(t)) {
                 stack.push(Double.parseDouble(t));

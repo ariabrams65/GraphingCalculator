@@ -35,4 +35,8 @@ public class Plot {
     public List<Equation> getGraphs() {
         return this.graphs;
     }
+    
+    public void setWindow(int window) {
+        this.window = window;
+    }
 }
