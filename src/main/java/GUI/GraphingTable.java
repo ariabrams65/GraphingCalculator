@@ -43,14 +43,22 @@ public class GraphingTable extends JPanel {
 
         for (double i = window / 2.0 * -1; i < window / 2; i += increment) {
 
-            int xPixel = (int) (getWidth() / 2 + (getWidth() / 2 * ((2 * i) / window)));
-            int yPixel = (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / window)));
-
+            int xPixel = getXPixel(i);
+            int yPixel = getYPixel(i, e);
+            
+            //checks to see if the value is undefined and skips it
             if (Double.toString(e.getYValue(i)).equals("NaN")) {
                 continue;
             }
+            //calculating the next y value to remove gaps in the graph
+            int yNext = getYPixel(i + increment, e);
+            int yHeight = yNext - yPixel;
+            
+            if (yHeight == 0) {
+                yHeight = 2;
+            }
 
-            g.fillRect(xPixel, yPixel - 1, 2, 3);
+            g.fillRect(xPixel, yPixel - 1, 2, yHeight);
         }
     }
 
@@ -60,5 +68,14 @@ public class GraphingTable extends JPanel {
         g.fillRect(getWidth() / 2, 0, 2, getHeight());
 
         g.fillRect(0, getHeight() / 2, getWidth(), 2);
+    }
+
+    
+    private int getXPixel(double i) {
+       return (int)(getWidth() / 2 + (getWidth() / 2 * ((2 * i) / plot.getWindow())));
+    }
+    
+    private int getYPixel(double i, Equation e) {
+        return (int)(getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / plot.getWindow())));
     }
 }

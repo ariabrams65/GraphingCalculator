@@ -57,6 +57,8 @@ public class Equation {
 
         } else if (t.equals("^")) {
             return Math.pow(op1, op2);
+        } else if (t.equals("/")) {
+            return op1 / op2;
         }
         return -1;
     }
