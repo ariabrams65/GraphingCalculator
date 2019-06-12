@@ -5,3 +5,4 @@ GUI\UI.class
 GUI\UI$2.class
 Logic\Equation.class
 GUI\UI$1.class
+Logic\Association.class
