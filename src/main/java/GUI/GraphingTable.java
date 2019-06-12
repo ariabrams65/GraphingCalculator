@@ -4,6 +4,9 @@ import Logic.Equation;
 import Logic.Plot;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JPanel;
 
 public class GraphingTable extends JPanel {
@@ -16,15 +19,20 @@ public class GraphingTable extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        List<Color> colors = new ArrayList<Color>();
+        colors.addAll(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.orange, Color.yellow));
+
         super.paintComponent(g);
 
         graphGrid(g);
-
-        g.setColor(Color.BLUE);
         //I don't know why I need a try Catch
         try {
-            for (Equation e : plot.getGraphs()) {
-                graph(e, g);
+            for (int i = 0; i < plot.getGraphs().size(); i++) {
+                    Equation e = plot.getGraphs().get(i);
+                    //changes color for each equation
+                    g.setColor(colors.get(i));
+                    
+                    graph(e, g);  
             }
         } catch (NullPointerException e) {
             return;
@@ -45,7 +53,7 @@ public class GraphingTable extends JPanel {
 
             int xPixel = getXPixel(i);
             int yPixel = getYPixel(i, e);
-            
+
             //checks to see if the value is undefined and skips it
             if (Double.toString(e.getYValue(i)).equals("NaN")) {
                 continue;
@@ -53,7 +61,7 @@ public class GraphingTable extends JPanel {
             //calculating the next y value to remove gaps in the graph
             int yNext = getYPixel(i + increment, e);
             int yHeight = yNext - yPixel;
-            
+
             if (yHeight == 0) {
                 yHeight = 2;
             }
@@ -70,12 +78,11 @@ public class GraphingTable extends JPanel {
         g.fillRect(0, getHeight() / 2, getWidth(), 2);
     }
 
-    
     private int getXPixel(double i) {
-       return (int)(getWidth() / 2 + (getWidth() / 2 * ((2 * i) / plot.getWindow())));
+        return (int) (getWidth() / 2 + (getWidth() / 2 * ((2 * i) / plot.getWindow())));
     }
-    
+
     private int getYPixel(double i, Equation e) {
-        return (int)(getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / plot.getWindow())));
+        return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / plot.getWindow())));
     }
 }
