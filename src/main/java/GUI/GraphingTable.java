@@ -28,10 +28,10 @@ public class GraphingTable extends JPanel {
         //I don't know why I need a try Catch
         try {
             for (Equation e : plot.getGraphs()) {
-                    //changes color for each equation
-                    g.setColor(colors.get(e.getNumber()));
-                    
-                    graph(e, g);  
+                //changes color for each equation
+                g.setColor(colors.get(e.getNumber()));
+
+                graph(e, g);
             }
         } catch (NullPointerException e) {
             return;
@@ -48,14 +48,14 @@ public class GraphingTable extends JPanel {
 
         double increment = 1 / ((double) getWidth() / window);
 
-        for (double i = window / 2.0 * -1; i < window / 2; i += increment) {
+        for (double i = window / 2.0 * -1; i < window / 2.0; i += increment) {
 
             int xPixel = getXPixel(i);
             int yPixel = getYPixel(i, e);
 
             //checks to see if the value is undefined and skips it
             if (Double.toString(e.getYValue(i)).equals("NaN")) {
-               continue;
+                continue;
             }
             //calculating the next y value to remove gaps in the graph
             int yNext = getYPixel(i + increment, e);
@@ -73,8 +73,9 @@ public class GraphingTable extends JPanel {
         g.setColor(Color.BLACK);
 
         g.fillRect(getWidth() / 2, 0, 2, getHeight());
-
         g.fillRect(0, getHeight() / 2, getWidth(), 2);
+
+        graphGridMarks(g);
     }
 
     private int getXPixel(double i) {
@@ -83,5 +84,27 @@ public class GraphingTable extends JPanel {
 
     private int getYPixel(double i, Equation e) {
         return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / plot.getWindow())));
+    }
+
+    public void graphGridMarks(Graphics g) {
+        g.setColor(Color.GRAY);
+        int window = plot.getWindow();
+        double increment = getHeight() / (double) window;
+
+        for (double y = getHeight() / 2; y <= getHeight(); y += increment) {
+            g.fillRect(0, (int)y, getWidth(), 1);
+        }
+        for (double y = getHeight() / 2; y >= 0; y -= increment) {
+            g.fillRect(0, (int)y, getWidth(), 1);
+        }
+
+        increment = (double) getWidth() / window;
+
+        for (double x = getWidth() / 2; x <= getWidth(); x += increment) {
+            g.fillRect((int)x, 0, 1, getHeight());
+        }
+        for (double x = getHeight() / 2; x >= 0; x -= increment) {
+            g.fillRect((int)x, 0, 1, getHeight());
+        }
     }
 }

@@ -227,11 +227,11 @@ public class UI extends javax.swing.JFrame {
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
         
-        if ((int)jSpinner1.getValue() < 2) {
-            jSpinner1.setValue(2);
+        if ((int)jSpinner1.getValue() < 1) {
+            jSpinner1.setValue(1);
         }
         plot.setWindow((int)jSpinner1.getValue());
-        
+        graphingTable1.repaint();
     }//GEN-LAST:event_jSpinner1StateChanged
 
     /**
