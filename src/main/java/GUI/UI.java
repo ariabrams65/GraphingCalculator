@@ -20,9 +20,11 @@ public class UI extends javax.swing.JFrame {
     public UI() {
         initComponents();
         
-        this.plot = new Plot((int)jSpinner1.getValue());
-        
+        this.plot = new Plot((int)jSpinner1.getValue());        
         graphingTable1.setGraphs(plot);
+        
+        MouseListener ml = new MouseListener(graphingTable1, plot);
+        graphingTable1.addMouseWheelListener(ml);
     }
 
     /**
@@ -227,7 +229,7 @@ public class UI extends javax.swing.JFrame {
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
         
-        if ((int)jSpinner1.getValue() < 1) {
+        if ((int)jSpinner1.getValue() < 2) {
             jSpinner1.setValue(1);
         }
         plot.setWindow((int)jSpinner1.getValue());
