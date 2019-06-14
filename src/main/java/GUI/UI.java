@@ -20,6 +20,8 @@ public class UI extends javax.swing.JFrame {
     public UI() {
         initComponents();
         
+        graphingTable1.setOrigin();
+        
         this.plot = new Plot((int)jSpinner1.getValue());        
         graphingTable1.setGraphs(plot);
         

@@ -15,8 +15,7 @@ public class GraphingTable extends JPanel {
 
     private Plot plot;
     private int window;
-    private double x;
-    private double y;
+    private Point origin;
 
     public GraphingTable() {
         setBackground(Color.WHITE);
@@ -26,6 +25,8 @@ public class GraphingTable extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        //this.origin = new Point(getWidth() / 2, getHeight() / 2);
+        
         List<Color> colors = new ArrayList<Color>();
         colors.addAll(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.orange, Color.yellow));
 
@@ -53,8 +54,7 @@ public class GraphingTable extends JPanel {
 
         double increment = 1 / ((double) getWidth() / window);
 
-        for (double i = window / -2.0; i < window / 2.0; i += increment) {
-
+        for (double i = window / -2.0 - getOriginXCoord(); i < window / 2.0 - getOriginXCoord(); i += increment) {
             int xPixel = getXPixel(i);
             int yPixel = getYPixel(i, e);
 
@@ -76,45 +76,38 @@ public class GraphingTable extends JPanel {
 
     private void graphGrid(Graphics g) {
         g.setColor(Color.BLACK);
-
-        g.fillRect(0, getYPixel(y), getWidth(), 2);
-        g.fillRect(getXPixel(x), 0, 2, getHeight());
+        g.fillRect(0, origin.y, getWidth(), 2);
+        g.fillRect(origin.x, 0, 2, getHeight());
 
         graphGridMarks(g);
     }
 
     private int getXPixel(double i) {
-        return (int) (getWidth() / 2 + (getWidth() / 2 * ((2 * i) / window)));
+        return (int) (origin.x + (getWidth() / 2 * ((2 * i) / window)));
     }
 
     private int getYPixel(double i, Equation e) {
-        return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / window)));
-    }
-
-    private int getYPixel(double y) {
-        return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * y) / window)));
+        return (int) (origin.y - (getHeight() / 2 * ((2 * e.getYValue(i)) / window)));
     }
 
     public void graphGridMarks(Graphics g) {
         g.setColor(Color.GRAY);
 
-        int xPixel = getXPixel(x);
-        int yPixel = getYPixel(y);
-        double increment = getHeight() / (double) window;
+        double increment = (double)getHeight() / window;
 
-        for (double y = yPixel; y <= getHeight(); y += increment) {
+        for (double y = origin.y; y <= getHeight(); y += increment) {
             g.fillRect(0, (int) y, getWidth(), 1);
         }
-        for (double y = yPixel; y >= 0; y -= increment) {
+        for (double y = origin.y; y >= 0; y -= increment) {
             g.fillRect(0, (int) y, getWidth(), 1);
         }
 
-        increment = (double) getWidth() / window;
+        increment = (double)getWidth() / window;
 
-        for (double x = xPixel; x <= getWidth(); x += increment) {
+        for (double x = origin.x; x <= getWidth(); x += increment) {
             g.fillRect((int) x, 0, 1, getHeight());
         }
-        for (double x = xPixel; x >= 0; x -= increment) {
+        for (double x = origin.x; x >= 0; x -= increment) {
             g.fillRect((int) x, 0, 1, getHeight());
         }
     }
@@ -127,8 +120,15 @@ public class GraphingTable extends JPanel {
         return this.window;
     }
 
-    public void moveOrigin(double dx, double dy) {
-        this.x += dx;
-        this.y += dy;
+    public void moveOrigin(int dx, int dy) {
+        this.origin.translate(dx, dy);
+    }
+    
+    public void setOrigin() {
+        this.origin = new Point(getWidth() / 2, getHeight() / 2);
+    }
+    
+    public double getOriginXCoord() {
+        return (double)window * (origin.x - (getWidth() / 2)) / getWidth();
     }
 }

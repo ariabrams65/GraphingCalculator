@@ -28,9 +28,9 @@ public class MouseListener extends MouseAdapter {
     
     @Override
     public void mouseDragged(MouseEvent e) {
-        double dx = ((double)(e.getX() - mousePt.x) / table.getWidth() * table.getWindow());
-        double dy = - 1 * ((double)(e.getY() - mousePt.y) / table.getHeight() * table.getWindow());
-  
+        int dx = e.getX() - mousePt.x;
+        int dy = e.getY() - mousePt.y;
+        
         table.moveOrigin(dx, dy);
         mousePt = e.getPoint();
 
