@@ -54,23 +54,23 @@ public class GraphingTable extends JPanel {
 
         double increment = 1 / ((double) getWidth() / window);
 
-        for (double i = window / -2.0 - getOriginXCoord(); i < window / 2.0 - getOriginXCoord(); i += increment) {
-            int xPixel = getXPixel(i);
-            int yPixel = getYPixel(i, e);
+        for (double x = window / -2.0 - getOriginXCoord(); x < window / 2.0 - getOriginXCoord(); x += increment) {
+            int xPixel = getXPixel(x);
+            int yPixel = getYPixel(x, e);
 
             //checks to see if the value is undefined and skips it
-            if (Double.toString(e.getYValue(i)).equals("NaN")) {
+            if (Double.toString(e.getYValue(x)).equals("NaN")) {
                 continue;
             }
             //calculating the next y value to remove gaps in the graph
-            int yNext = getYPixel(i + increment, e);
+            int yNext = getYPixel(x + increment, e);
             int yHeight = yNext - yPixel;
 
             if (yHeight == 0) {
                 yHeight = 2;
             }
 
-            g.fillRect(xPixel, yPixel - 1, 2, yHeight);
+            g.fillRect(xPixel, yPixel, 2, yHeight);
         }
     }
 
@@ -82,12 +82,12 @@ public class GraphingTable extends JPanel {
         graphGridMarks(g);
     }
 
-    private int getXPixel(double i) {
-        return (int) (origin.x + (getWidth() / 2 * ((2 * i) / window)));
+    private int getXPixel(double x) {
+        return (int)(origin.x + (getWidth() * ((x) / window)));
     }
 
-    private int getYPixel(double i, Equation e) {
-        return (int) (origin.y - (getHeight() / 2 * ((2 * e.getYValue(i)) / window)));
+    private int getYPixel(double x, Equation e) {
+        return (int)(origin.y - (getHeight() * ((e.getYValue(x)) / window)));
     }
 
     public void graphGridMarks(Graphics g) {
