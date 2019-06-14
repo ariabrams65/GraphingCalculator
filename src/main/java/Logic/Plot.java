@@ -6,11 +6,9 @@ import java.util.List;
 public class Plot {
 
     private List<Equation> graphs;
-    private int window;
 
     public Plot(int window) {
         this.graphs = new ArrayList<Equation>();
-        this.window = window;
     }
 
     public void addEquations(String... equation) {
@@ -28,15 +26,7 @@ public class Plot {
         }
     }
 
-    public int getWindow() {
-        return this.window;
-    }
-
     public List<Equation> getGraphs() {
         return this.graphs;
-    }
-    
-    public void setWindow(int window) {
-        this.window = window;
     }
 }

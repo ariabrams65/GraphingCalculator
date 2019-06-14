@@ -23,8 +23,10 @@ public class UI extends javax.swing.JFrame {
         this.plot = new Plot((int)jSpinner1.getValue());        
         graphingTable1.setGraphs(plot);
         
-        MouseListener ml = new MouseListener(graphingTable1, plot);
+        MouseListener ml = new MouseListener(graphingTable1);
         graphingTable1.addMouseWheelListener(ml);
+        graphingTable1.addMouseMotionListener(ml);
+        graphingTable1.addMouseListener(ml);
     }
 
     /**
@@ -232,7 +234,7 @@ public class UI extends javax.swing.JFrame {
         if ((int)jSpinner1.getValue() < 2) {
             jSpinner1.setValue(1);
         }
-        plot.setWindow((int)jSpinner1.getValue());
+        graphingTable1.setWindow((int)jSpinner1.getValue());
         graphingTable1.repaint();
     }//GEN-LAST:event_jSpinner1StateChanged
 

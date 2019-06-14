@@ -3,7 +3,9 @@ package GUI;
 import Logic.Equation;
 import Logic.Plot;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +14,14 @@ import javax.swing.JPanel;
 public class GraphingTable extends JPanel {
 
     private Plot plot;
+    private int window;
+    private double x;
+    private double y;
 
     public GraphingTable() {
         setBackground(Color.WHITE);
+        this.window = 20;
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     @Override
@@ -44,11 +51,9 @@ public class GraphingTable extends JPanel {
 
     private void graph(Equation e, Graphics g) {
 
-        int window = plot.getWindow();
-
         double increment = 1 / ((double) getWidth() / window);
 
-        for (double i = window / 2.0 * -1; i < window / 2.0; i += increment) {
+        for (double i = window / -2.0; i < window / 2.0; i += increment) {
 
             int xPixel = getXPixel(i);
             int yPixel = getYPixel(i, e);
@@ -72,39 +77,58 @@ public class GraphingTable extends JPanel {
     private void graphGrid(Graphics g) {
         g.setColor(Color.BLACK);
 
-        g.fillRect(getWidth() / 2, 0, 2, getHeight());
-        g.fillRect(0, getHeight() / 2, getWidth(), 2);
+        g.fillRect(0, getYPixel(y), getWidth(), 2);
+        g.fillRect(getXPixel(x), 0, 2, getHeight());
 
         graphGridMarks(g);
     }
 
     private int getXPixel(double i) {
-        return (int) (getWidth() / 2 + (getWidth() / 2 * ((2 * i) / plot.getWindow())));
+        return (int) (getWidth() / 2 + (getWidth() / 2 * ((2 * i) / window)));
     }
 
     private int getYPixel(double i, Equation e) {
-        return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / plot.getWindow())));
+        return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * e.getYValue(i)) / window)));
+    }
+
+    private int getYPixel(double y) {
+        return (int) (getHeight() / 2 - (getHeight() / 2 * ((2 * y) / window)));
     }
 
     public void graphGridMarks(Graphics g) {
         g.setColor(Color.GRAY);
-        int window = plot.getWindow();
+
+        int xPixel = getXPixel(x);
+        int yPixel = getYPixel(y);
         double increment = getHeight() / (double) window;
 
-        for (double y = getHeight() / 2; y <= getHeight(); y += increment) {
-            g.fillRect(0, (int)y, getWidth(), 1);
+        for (double y = yPixel; y <= getHeight(); y += increment) {
+            g.fillRect(0, (int) y, getWidth(), 1);
         }
-        for (double y = getHeight() / 2; y >= 0; y -= increment) {
-            g.fillRect(0, (int)y, getWidth(), 1);
+        for (double y = yPixel; y >= 0; y -= increment) {
+            g.fillRect(0, (int) y, getWidth(), 1);
         }
 
         increment = (double) getWidth() / window;
 
-        for (double x = getWidth() / 2; x <= getWidth(); x += increment) {
-            g.fillRect((int)x, 0, 1, getHeight());
+        for (double x = xPixel; x <= getWidth(); x += increment) {
+            g.fillRect((int) x, 0, 1, getHeight());
         }
-        for (double x = getHeight() / 2; x >= 0; x -= increment) {
-            g.fillRect((int)x, 0, 1, getHeight());
+        for (double x = xPixel; x >= 0; x -= increment) {
+            g.fillRect((int) x, 0, 1, getHeight());
         }
+    }
+
+    public void setWindow(int size) {
+        this.window = size;
+    }
+
+    public int getWindow() {
+        return this.window;
+    }
+
+    public void moveOrigin(double dx, double dy) {
+        this.x += dx;
+        this.y += dy;
     }
 }
