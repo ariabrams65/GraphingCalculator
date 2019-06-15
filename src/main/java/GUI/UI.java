@@ -20,7 +20,7 @@ public class UI extends javax.swing.JFrame {
     public UI() {
         initComponents();
         
-        graphingTable1.setOrigin();
+        graphingTable1.resetOrigin();
         
         this.plot = new Plot((int)jSpinner1.getValue());        
         graphingTable1.setGraphs(plot);
@@ -232,6 +232,7 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
+        graphingTable1.resetOrigin();
         
         if ((int)jSpinner1.getValue() < 2) {
             jSpinner1.setValue(1);

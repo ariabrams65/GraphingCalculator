@@ -20,7 +20,7 @@ public class GraphingTable extends JPanel {
     public GraphingTable() {
         setBackground(Color.WHITE);
         this.window = 20;
-        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
     @Override
@@ -124,11 +124,16 @@ public class GraphingTable extends JPanel {
         this.origin.translate(dx, dy);
     }
     
-    public void setOrigin() {
+    public void resetOrigin() {
         this.origin = new Point(getWidth() / 2, getHeight() / 2);
     }
     
     public double getOriginXCoord() {
+        //returns grid/non-pixel version of the x coord 
         return (double)window * (origin.x - (getWidth() / 2)) / getWidth();
+    }
+    
+    public Point getOrigin() {
+        return this.origin;
     }
 }

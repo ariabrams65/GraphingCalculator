@@ -1,4 +1,3 @@
-
 package GUI;
 
 import Logic.Plot;
@@ -8,38 +7,47 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 public class MouseListener extends MouseAdapter {
-    
+
     private GraphingTable table;
     private Point mousePt;
-    
+
     public MouseListener(GraphingTable table) {
         this.table = table;
     }
-    
+
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         table.setWindow(table.getWindow() + e.getWheelRotation());
         if (table.getWindow() < 1) {
             table.setWindow(1);
+            return;
         }
+        int x = e.getX() - table.getOrigin().x;
+        int y = e.getY() - table.getOrigin().y;
         
+        if (e.getWheelRotation() < 0) {
+            table.moveOrigin(-1 * x / table.getWindow(), -1 * y / table.getWindow());
+
+        } else {
+            table.moveOrigin(x / table.getWindow(), y / table.getWindow());
+        }
         table.repaint();
     }
-    
+
     @Override
     public void mouseDragged(MouseEvent e) {
         int dx = e.getX() - mousePt.x;
         int dy = e.getY() - mousePt.y;
-        
+
         table.moveOrigin(dx, dy);
         mousePt = e.getPoint();
 
         table.repaint();
     }
-    
-    @Override 
+
+    @Override
     public void mousePressed(MouseEvent e) {
-       this.mousePt = e.getPoint();
+        this.mousePt = e.getPoint();
         table.repaint();
     }
 }
