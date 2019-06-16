@@ -22,7 +22,7 @@ public class UI extends javax.swing.JFrame {
         
         graphingTable1.resetOrigin();
         
-        this.plot = new Plot((int)jSpinner1.getValue());        
+        this.plot = new Plot();        
         graphingTable1.setGraphs(plot);
         
         MouseListener ml = new MouseListener(graphingTable1);

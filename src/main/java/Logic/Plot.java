@@ -7,7 +7,7 @@ public class Plot {
 
     private List<Equation> graphs;
 
-    public Plot(int window) {
+    public Plot() {
         this.graphs = new ArrayList<Equation>();
     }
 

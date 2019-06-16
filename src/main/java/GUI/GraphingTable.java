@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class GraphingTable extends JPanel {
 
     private Plot plot;
-    private int window;
+    private double window;
     private Point origin;
 
     public GraphingTable() {
@@ -50,20 +50,20 @@ public class GraphingTable extends JPanel {
         this.plot = plot;
     }
 
-    private void graph(Equation e, Graphics g) {
+    private void graph(Equation equation, Graphics g) {
 
         double increment = 1 / ((double) getWidth() / window);
 
         for (double x = window / -2.0 - getOriginXCoord(); x < window / 2.0 - getOriginXCoord(); x += increment) {
             int xPixel = getXPixel(x);
-            int yPixel = getYPixel(x, e);
+            int yPixel = getYPixel(x, equation);
 
             //checks to see if the value is undefined and skips it
-            if (Double.toString(e.getYValue(x)).equals("NaN")) {
+            if (Double.toString(equation.getYValue(x)).equals("NaN")) {
                 continue;
             }
             //calculating the next y value to remove gaps in the graph
-            int yNext = getYPixel(x + increment, e);
+            int yNext = getYPixel(x + increment, equation);
             int yHeight = yNext - yPixel;
 
             if (yHeight == 0) {
@@ -86,8 +86,8 @@ public class GraphingTable extends JPanel {
         return (int)(origin.x + (getWidth() * ((x) / window)));
     }
 
-    private int getYPixel(double x, Equation e) {
-        return (int)(origin.y - (getHeight() * ((e.getYValue(x)) / window)));
+    private int getYPixel(double x, Equation equation) {
+        return (int)(origin.y - (getHeight() * ((equation.getYValue(x)) / window)));
     }
 
     public void graphGridMarks(Graphics g) {
@@ -112,11 +112,11 @@ public class GraphingTable extends JPanel {
         }
     }
 
-    public void setWindow(int size) {
+    public void setWindow(double size) {
         this.window = size;
     }
 
-    public int getWindow() {
+    public double getWindow() {
         return this.window;
     }
 

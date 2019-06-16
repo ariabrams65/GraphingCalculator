@@ -17,7 +17,7 @@ public class MouseListener extends MouseAdapter {
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        table.setWindow(table.getWindow() + e.getWheelRotation());
+        table.setWindow(table.getWindow() + e.getWheelRotation() * (table.getWindow() / 20));
         if (table.getWindow() < 1) {
             table.setWindow(1);
             return;
@@ -26,10 +26,10 @@ public class MouseListener extends MouseAdapter {
         int y = e.getY() - table.getOrigin().y;
         
         if (e.getWheelRotation() < 0) {
-            table.moveOrigin(-1 * x / table.getWindow(), -1 * y / table.getWindow());
+            table.moveOrigin((int)(-1 * x / 20), (int)(-1 * y / 20));
 
         } else {
-            table.moveOrigin(x / table.getWindow(), y / table.getWindow());
+            table.moveOrigin((int)(x / 20), (int)(y / 20));
         }
         table.repaint();
     }
